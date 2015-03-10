@@ -1,0 +1,9 @@
+{
+  "enforceall": true,
+  "nocomma": false,
+  "singleGroups" : false,
+  "laxcomma": true,
+  "laxbreak": true,
+  "node": true,
+  "browser": true
+}
