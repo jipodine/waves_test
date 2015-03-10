@@ -1,6 +1,9 @@
+var debug = require('debug')('sketch');
+
 var wavesUI = require('waves-ui');
 var timeline = wavesUI.timeline;
 var breakpoint = wavesUI.breakpoint;
+
 var d3 = wavesUI.d3;
 
 var xDomain = [-10, 10];
@@ -28,14 +31,55 @@ var datumToAdd = {
   r: 6
 };
 
+function oneChildSelection(element) {
+  d3.selectAll(element.parentNode.childNodes)
+    .classed('selected', false);
+  var $s = d3.select(element);
+  $s.classed('selected', ! $s.classed('selected'));
+}
+
 var app = {
   init() {
-    var $timeline = document.querySelector('#timeline');
+    var $sketchControl = d3.select('#sketch-control')
+          .append('p');
 
+    $sketchControl.append('button').attr('id', 'clickAdd')
+      .attr('class', 'sketch-control-element')
+      .text('Add')
+      .on('click', function (d, i) {
+        debug('Add');
+        oneChildSelection(this);
+      });
+
+    $sketchControl.append('button').attr('id', 'clickSelect')
+      .attr('class', 'sketch-control-element')
+      .text('Select')
+      .on('click', function (d, i) {
+        debug('Select');
+        oneChildSelection(this);
+      });
+
+    $sketchControl.append('button').attr('id', 'clickDelete')
+      .attr('class', 'sketch-control-element')
+      .text('Delete')
+      .on('click', function (d, i) {
+        debug('Delete');
+        oneChildSelection(this);
+      });
+
+    $sketchControl.append('button').attr('id', 'clickMove')
+      .attr('class', 'sketch-control-element')
+      .text('Move')
+      .on('click', function (d, i) {
+        debug('Move');
+        oneChildSelection(this);
+      });
+
+    var $sketch = document.querySelector('#sketch');
 
     var graph = timeline()
-      .width($timeline.clientWidth)
-      .height($timeline.clientWidth / 2)
+      .width($sketch.clientWidth)
+      .height($sketch.clientWidth / 2)
       .xDomain(xDomain)
       .yDomain(yDomain);
 
@@ -53,17 +97,14 @@ var app = {
     graph.add(breakpointLayer);
 
     // call once
-    d3.select('#timeline').call(graph.draw);
-
-    // to update
-    setTimeout(function() {
-      data.push(datumToAdd);
-      graph.update(breakpointLayer);
-    }, 3000);
+    d3.select('#sketch').call(graph.draw);
 
     graph.on('mousedown', function(e) {
       var cx = graph.xScale.invert(e.layerX);
       var cy = graph.xScale.invert(e.layerY);
+
+      // debug('item = %s', d3.select(e).classed('item') );
+      debug("e.layerX,Y = %s,%s", e.layerY, e.layerX);
 
       data.push({
         cx: cx,
@@ -71,6 +112,7 @@ var app = {
         r: 3
       });
 
+      // update after data change
       graph.update();
     });
   }

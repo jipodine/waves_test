@@ -1,4 +1,5 @@
 {
+  "esnext": true,
   "enforceall": true,
   "nocomma": false,
   "singleGroups" : false,

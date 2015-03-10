@@ -1,0 +1,25 @@
+body {
+    font-family: 'Helvetica';
+    margin: 20px;
+    position: relative;
+}
+
+#sketch {
+    margin: 0 auto;
+    border: 1px solid grey;
+}
+
+.sketch-control {
+}
+
+.sketch-control-element {
+    display: inline-block;
+    margin: 10px;
+    border: 10px;
+}
+
+.selected {
+    stroke: red;
+    border: 1px solid black;
+    background-color: transparent;
+}

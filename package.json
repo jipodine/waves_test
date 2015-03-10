@@ -12,6 +12,7 @@
   "dependencies": {
     "babelify": "^5.0.4",
     "browserify": "^9.0.3",
-    "waves-ui": "git://github.com/wavesjs/ui"
+    "debug": "^2.1.2",
+    "waves-ui": "wavesjs/ui"
   }
 }
