@@ -40,6 +40,8 @@ function oneChildSelection(element) {
 
 var app = {
   init() {
+    var addCtrl = false;
+
     var $sketchControl = d3.select('#sketch-control')
           .append('p');
 
@@ -48,6 +50,7 @@ var app = {
       .text('Add')
       .on('click', function (d, i) {
         debug('Add');
+        addCtrl = true;
         oneChildSelection(this);
       });
 
@@ -56,6 +59,7 @@ var app = {
       .text('Select')
       .on('click', function (d, i) {
         debug('Select');
+        addCtrl = false;
         oneChildSelection(this);
       });
 
@@ -100,8 +104,9 @@ var app = {
     d3.select('#sketch').call(graph.draw);
 
     graph.on('mousedown', function(e) {
+      if (!addCtrl) { return; }
       var cx = graph.xScale.invert(e.layerX);
-      var cy = graph.xScale.invert(e.layerY);
+      var cy = graph.yScale.invert(e.layerY);
 
       // debug('item = %s', d3.select(e).classed('item') );
       debug("e.layerX,Y = %s,%s", e.layerY, e.layerX);
